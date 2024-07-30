@@ -7,10 +7,22 @@ body {
     color: #ffffff;
     padding: 10px;
   }
-  
+
+  #img-container {
+    background-color: #0a0a23;
+    color: #ffffff;
+    padding: 10px;
+  }
+
+  .background-image{
+    height: 10%rem;
+    width: 100%;
+    object-fit: cover;
+  }
+
   #game {
     max-width: 500px;
-    max-height: 400px;
+    height: auto;
     background-color: #ffffff;
     color: #ffffff;
     margin: 30px auto 0px;
