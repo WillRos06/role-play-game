@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", (event) => {
-    
     // declaracion de variables
     let gold = 50;
     let health = 100;
@@ -12,50 +11,73 @@ document.addEventListener("DOMContentLoaded", (event) => {
     let xpText = document.querySelector('#xpText');
     let text = document.querySelector('#text');
     let background = document.querySelector('#img-container .background-image');
-    const inventory = [];
+    let inventory = ["stick"];
+    let weaponcont = 0;
     const location = [
         {
             name: "town square",
             "button text": ["Go to store", "Go to cave", "Fight dragon"],
             "button functions": [goStore, goCave, fightDragon],
-            text: "You are in the town square. You see a sign that says \"Store\"."
+            text: "You are in the town square. You see a sign that says \"Store\".",
+            img: "images/town.jpeg"
         },
         {
             name: "store",
             "button text": ["Buy 10 health (10 gold)", "Buy weapon (30 gold)", "Go to town square"],
             "button functions": [buyHealth, buyWeapon, goTown],
-            text: "You enter the store."
+            text: "You enter the store.",
+            img: "images/store.jpeg"
+        },
+        {
+            name: "cave",
+            "button text": ["Fight slime", "Fight fanged beast", "Go to town square"],
+            "button functions": [fightSlime, fightBeast, goTown],
+            text: "You enter the cave. You see some monsters."
         }
     ];
-    const controls = document.querySelector('#controls');
 
-    loadEventListener();
-    function loadEventListener(){
-        controls.addEventListener('click', event => {    
-            const buttonId = event.target.getAttribute("id");
-            updateLocation(buttonId);
-        })
-    }
+    const monsters = [
+        {
+          name: "slime",
+          level: 2,
+          health: 15
+        },
+        {
+          name: "fanged beast",
+          level: 8,
+          health: 60
+        },
+        {
+          name: "dragon",
+          level: 20,
+          health: 300
+        }
+    ]
+
+
+    const weapons = ["dagger", "claw hammer", "sword"];
+    
+
+    // initialize buttons
+    btn1.onclick = goStore;
+    btn2.onnclick = goCave;
+    btn3.onclick = fightDragon();
+   
 
     
-    function updateLocation(buttonId){
-        if(buttonId === 'button1'){
-            goStore();
-        } else if(buttonId === 'button2'){
-            
-        } else if(buttonId === 'button3'){
-
-        }
+    function updateLocation(location){
+        btn1.textContent = location["button text"][0];
+        btn2.textContent = location["button text"][1];
+        btn3.textContent = location["button text"][2];
+        btn1.onclick = location["button functions"][0];
+        btn2.onclick = location["button functions"][1];
+        btn3.onclick = location["button functions"][2];
+        text.textContent = location["text"];
+        background.src = location.img;
     }
 
-    function goStore(){
-        background.src = "images/store.jpeg";
-        btn1.textContent = location[1]["button text"][0];
-        btn2.textContent = location[1]["button text"][1];
-        btn3.textContent = location[1]["button text"][2];
-        btn1.onclick = location[1]["button functions"][0];
-        btn2.onclick = location[1]["button functions"][1];
-        btn3.onclick = location[1]["button functions"][2];
+    function goStore(){ 
+        updateLocation(location[1]);
     }
 
     function goCave(){
@@ -78,16 +100,31 @@ document.addEventListener("DOMContentLoaded", (event) => {
         goldText.textContent = gold; 
     }
 
-    function buyWeapon(){
+    function buyWeapon(){        
+        console.log(inventory);
+        if(gold >= 30){
 
+            gold -= 30;
+            console.log(gold);
+            goldText.textContent = gold; 
+            inventory = [...inventory, weapons[weaponcont]];
+            text.textContent = `you have now a ${weapons[weaponcont]}`;
+            weaponcont++;
+        } else {
+            text.textContent = `you don't have enough money to buy a new weapon.`;
+        }
     }
 
     function goTown(){
-        background.src = "images/town.jpeg";
-        text.textContent = "You are back to town."
-        btn1.textContent = location[0]["button text"][0];
-        btn2.textContent = location[0]["button text"][1];
-        btn3.textContent = location[0]["button text"][2];
+        updateLocation(location[0]);
+    }
+
+    function fightSlime(){
+
+    }
+
+    function fightBeast(){
+
     }
 });
 
